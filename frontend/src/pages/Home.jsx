@@ -5,7 +5,6 @@ import heroImage from '../assets/hero.png';
 import Features from '../components/Features';
 import About from './About';
 import Showcase from '../components/Showcase';
-import TestimonialSlider from '../components/TestimonialSlider';
 import FAQ from '../components/FAQ';
 import { FaComment } from "react-icons/fa";
 import { toast, ToastContainer } from 'react-toastify';
@@ -164,7 +163,6 @@ export default function Home() {
       <About />
       <Showcase />
       <AdvantagesDisadvantages />
-      <TestimonialSlider />
       <FAQ />
     </div>
   );

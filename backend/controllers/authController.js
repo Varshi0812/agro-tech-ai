@@ -16,6 +16,13 @@ exports.signinController = async (req, res) => {
       return res.status(401).json({ message: 'User not found' });
     }
 
+    // Auto-verify in development if flag is enabled
+    if (!user.isVerified && process.env.DISABLE_EMAIL_VERIFICATION === 'true') {
+      user.isVerified = true;
+      user.verificationToken = undefined;
+      await user.save();
+    }
+
     // Check if user is verified
     if (!user.isVerified) {
       // Generate a new verification token
@@ -25,12 +32,19 @@ exports.signinController = async (req, res) => {
       // Save the updated user with the new verification token
       await user.save();
 
-      // Send the verification email
-      await sendVerificationEmail(user.email, verificationToken);
+      // Attempt to send the verification email (do not block login response)
+      let resent = false;
+      try {
+        await sendVerificationEmail(user.email, verificationToken);
+        resent = true;
+      } catch (emailError) {
+        console.error("Resend verification email failed:", emailError);
+      }
 
       // Return a response saying the user needs to verify their email
       return res.status(403).json({
-        message: 'User is not verified. Please verify your email.'
+        message: 'User is not verified. Please verify your email.',
+        resent
       });
     }
 
@@ -38,6 +52,12 @@ exports.signinController = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Guard against missing JWT secret
+    if (!process.env.JWT_SECRET) {
+      console.error("JWT_SECRET is not configured");
+      return res.status(500).json({ message: 'Server misconfigured. Please try again later.' });
     }
 
     // Set token expiry based on rememberMe flag
@@ -197,10 +217,26 @@ exports.signupController = async (req, res) => {
     const verificationToken = crypto.randomBytes(32).toString('hex');
     const newUser = new User({ username,firstName,lastName, email, password, verificationToken });
 
-    await sendVerificationEmail(email, verificationToken);
+    // If email verification is disabled (local dev), mark verified and skip email
+    if (process.env.DISABLE_EMAIL_VERIFICATION === 'true') {
+      newUser.isVerified = true;
+      newUser.verificationToken = undefined;
+      await newUser.save();
+      return res.status(201).json({ message: 'Account created (dev mode: auto-verified)', emailSent: false });
+    }
 
+    // Save the user first to avoid blocking registration on email issues
     await newUser.save();
-    res.status(201).json({ message: 'Please check your email to verify your account' });
+
+    let emailSent = false;
+    try {
+      await sendVerificationEmail(email, verificationToken);
+      emailSent = true;
+    } catch (emailError) {
+      console.error("Signup verification email failed:", emailError);
+    }
+
+    res.status(201).json({ message: 'Please check your email to verify your account', emailSent });
   } catch (error) {
     res.status(500).json({ message: 'Error registering user' });
   }

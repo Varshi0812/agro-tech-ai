@@ -12,7 +12,7 @@ const sendVerificationEmail = async (email, token) => {
   const verificationLink = `https://agro-tech-ai.vercel.app/verify-email?token=${token}`;
 
   const mailOptions = {
-    from: 'AgroTech AI',
+    from: process.env.EMAIL_USER || 'no-reply@agrotechai.com',
     to: email,
     subject: 'Account Verification',
     text: `Please verify your account by clicking on the following link: ${verificationLink}`,

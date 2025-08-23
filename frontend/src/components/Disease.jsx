@@ -49,7 +49,7 @@ const fruits = [
   },
   {
     name: "Orange",
-    image: "https://www.irishtimes.com/polopoly_fs/1.3923226.1560339148!/image/image.jpg_gen/derivatives/ratio_1x1_w1200/image.jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Ambersweet_oranges.jpg/1200px-Ambersweet_oranges.jpg",
     content: `Citrus Canker: Bacterial disease causing raised, corky lesions on fruit, leaves, and twigs.
               Greasy Spot: Fungal disease causing oily-looking lesions on leaves.
               Huanglongbing (Citrus Greening): Bacterial disease causing yellowing leaves and misshapen fruit.
@@ -126,9 +126,9 @@ export default function PlantDiseaseDetection() {
   const [activeCard, setActiveCard] = useState(null)
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white p-8 py-24">
+    <div className="min-h-screen p-8 py-24 bg-gradient-to-b from-green-50 to-white">
       <motion.h1 
-        className="text-4xl font-bold text-green-700 text-center mb-8"
+        className="mb-8 text-4xl font-bold text-center text-green-700"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -137,7 +137,7 @@ export default function PlantDiseaseDetection() {
       </motion.h1>
       
       <motion.p 
-        className="text-xl text-green-600 text-center mb-12"
+        className="mb-12 text-xl text-center text-green-600"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
@@ -147,7 +147,7 @@ export default function PlantDiseaseDetection() {
   
       <div className="max-w-6xl mx-auto">
         <motion.h2 
-          className="text-2xl font-semibold text-green-600 mb-6"
+          className="mb-6 text-2xl font-semibold text-green-600"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
@@ -155,7 +155,7 @@ export default function PlantDiseaseDetection() {
           Special AI Engines
         </motion.h2>
   
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 gap-8 mb-12 md:grid-cols-2">
           {['Sugarcane', 'Paddy'].map((crop, index) => (
             <motion.div 
               key={crop}
@@ -163,16 +163,16 @@ export default function PlantDiseaseDetection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 + index * 0.2, duration: 0.5 }}
             >
-              <div className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border rounded-lg border-green-200">
+              <div className="overflow-hidden transition-shadow duration-300 border border-green-200 rounded-lg hover:shadow-lg">
                 <img 
                   src={crop === 'Sugarcane' ? 'https://cdn.pixabay.com/photo/2020/07/09/20/00/sugarcane-5388614_640.jpg' : 'https://m.media-amazon.com/images/I/51K+Xh2VIOL._AC_UF1000,1000_QL80_.jpg'}
                   alt={`${crop} Image`}
-                  className="w-full h-48 object-cover"
+                  className="object-cover w-full h-48"
                 />
                 <div className="p-6">
                   <Link 
                     href={`/${crop}Recognition`}
-                    className="text-xl font-semibold text-green-700 hover:text-green-500 transition-colors duration-300"
+                    className="text-xl font-semibold text-green-700 transition-colors duration-300 hover:text-green-500"
                   >
                     {crop} Engine
                   </Link>
@@ -180,7 +180,7 @@ export default function PlantDiseaseDetection() {
                   <div className="mt-4">
                     <Link 
                       to={`/${crop}Recognition`}
-                      className="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-500 transition-colors duration-300 mr-2"
+                      className="inline-block px-4 py-2 mr-2 text-white transition-colors duration-300 bg-green-600 rounded-md hover:bg-green-500"
                     >
                       Click Here
                     </Link>
@@ -192,7 +192,7 @@ export default function PlantDiseaseDetection() {
         </div>
   
         <motion.h2 
-          className="text-2xl font-semibold text-green-600 mb-6"
+          className="mb-6 text-2xl font-semibold text-green-600"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 1.1, duration: 0.5 }}
@@ -205,23 +205,23 @@ export default function PlantDiseaseDetection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.3, duration: 0.5 }}
         >
-          <div className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border rounded-lg border-green-200">
+          <div className="overflow-hidden transition-shadow duration-300 border border-green-200 rounded-lg hover:shadow-lg">
             <div className="p-6">
               <img 
                 src={allcrops}
                 alt="Combined Crops"
-                className="w-full h-48 object-cover rounded-lg mb-4"
+                className="object-cover w-full h-48 mb-4 rounded-lg"
               />
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center justify-between mb-4">
                 <Link 
                   href="/DiseaseRecognition"
-                  className="text-xl font-semibold text-green-700 hover:text-green-500 transition-colors duration-300"
+                  className="text-xl font-semibold text-green-700 transition-colors duration-300 hover:text-green-500"
                 >
                   Crop Engine
                 </Link>
                 <button
                   onClick={() => setShowCropList(!showCropList)}
-                  className="flex items-center text-green-600 hover:text-green-700 transition-colors duration-300 border border-green-600 px-3 py-1 rounded-md"
+                  className="flex items-center px-3 py-1 text-green-600 transition-colors duration-300 border border-green-600 rounded-md hover:text-green-700"
                 >
                   {showCropList ? <ChevronUp /> : <ChevronDown />}
                   <span className="ml-2">{showCropList ? "Hide Crops" : "Show Crops"}</span>
@@ -230,7 +230,7 @@ export default function PlantDiseaseDetection() {
               <div className="mt-4">
                 <Link 
                   to={"/DiseaseRecognition"}
-                  className="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-500 transition-colors duration-300 mr-2"
+                  className="inline-block px-4 py-2 mr-2 text-white transition-colors duration-300 bg-green-600 rounded-md hover:bg-green-500"
                 >
                   Click Here
                 </Link>
@@ -238,7 +238,7 @@ export default function PlantDiseaseDetection() {
   
               {showCropList && (
                 <motion.div 
-                  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" // Adjusted grid columns for better responsiveness
+                  className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" // Adjusted grid columns for better responsiveness
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   transition={{ duration: 0.5 }}
@@ -246,7 +246,7 @@ export default function PlantDiseaseDetection() {
                   {fruits.map((fruit, index) => (
                     <div 
                       key={fruit.name}
-                      className="overflow-hidden cursor-pointer transition-shadow duration-300 border rounded-md border-green-200 hover:shadow-lg hover:shadow-green-300" 
+                      className="overflow-hidden transition-shadow duration-300 border border-green-200 rounded-md cursor-pointer hover:shadow-lg hover:shadow-green-300" 
                       onMouseEnter={() => setActiveCard(index)}
                       onMouseLeave={() => setActiveCard(null)}
                     >
@@ -254,9 +254,9 @@ export default function PlantDiseaseDetection() {
                         <img 
                           src={fruit.image} 
                           alt={fruit.name}
-                          className="w-full h-32 object-cover rounded-md mb-2"
+                          className="object-cover w-full h-32 mb-2 rounded-md"
                         />
-                        <h3 className="text-lg font-medium text-green-700 mb-2">{fruit.name}</h3>
+                        <h3 className="mb-2 text-lg font-medium text-green-700">{fruit.name}</h3>
                         <motion.p 
                           className={`text-sm transition-opacity duration-300 ${activeCard === index ? 'opacity-100' : 'opacity-50'}`}
                         >

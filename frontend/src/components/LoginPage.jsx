@@ -14,9 +14,9 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const { isLoggedIn, login } = useAuth();
-  const ApiUrl = process.env.NODE_ENV === 'production'
-  ? 'https://agro-tech-ai-backend-teal.vercel.app'
-  : 'http://localhost:8080';
+  const ApiUrl = import.meta.env.MODE === 'production'
+    ? 'https://agro-tech-ai-backend-teal.vercel.app'
+    : 'http://localhost:8080';
 
   const navigate = useNavigate()
   // Handle standard email/password login
@@ -38,7 +38,13 @@ const LoginPage = () => {
         navigate(`/verification?email=${email}`);
       } else {
         // If the user is verified, log them in and display success message
-        login(response.data.token, response.data.user_id);
+        // Create user object from response data
+        const userData = {
+          id: response.data.user_id,
+          email: email,
+          // Add other user fields as needed
+        };
+        login(response.data.token, userData);
         toast.success("Login successful");
       }
   
@@ -69,7 +75,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 mt-10">
+    <div className="flex items-center justify-center min-h-screen mt-10 bg-gradient-to-r from-green-400 to-blue-500">
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -84,20 +90,20 @@ const LoginPage = () => {
         bodyClassName="custom-toast-body"
         className="mt-16"
       />
-      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 ease-in-out hover:scale-105">
+      <div className="grid w-full max-w-5xl grid-cols-1 overflow-hidden transition duration-500 ease-in-out transform bg-white rounded-lg shadow-lg md:grid-cols-2 hover:scale-105">
         <div className="hidden md:block">
           <img
             src={loginImage}
             alt="Login Illustration"
-            className="h-full w-full object-cover"
+            className="object-cover w-full h-full"
           />
         </div>
 
-        <div className="p-10 flex flex-col justify-center">
-          <h2 className="text-4xl font-bold text-center text-green-600 mb-4 animate-fadeInDown">
+        <div className="flex flex-col justify-center p-10">
+          <h2 className="mb-4 text-4xl font-bold text-center text-green-600 animate-fadeInDown">
             Welcome Back!
           </h2>
-          <p className="text-center text-gray-600 mb-8 animate-fadeInDown">
+          <p className="mb-8 text-center text-gray-600 animate-fadeInDown">
             Log in to continue to your account
           </p>
           <form className="space-y-4" onSubmit={handleSignIn}>
@@ -114,7 +120,7 @@ const LoginPage = () => {
                 placeholder="john@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 mt-1 rounded-md bg-green-100 text-green-800 focus:ring focus:ring-green-400"
+                className="w-full px-4 py-2 mt-1 text-green-800 bg-green-100 rounded-md focus:ring focus:ring-green-400"
                 required
               />
             </div>
@@ -132,13 +138,13 @@ const LoginPage = () => {
                   placeholder="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-2 mt-1 rounded-md bg-green-100 text-green-800 focus:ring focus:ring-green-400"
+                  className="w-full px-4 py-2 mt-1 text-green-800 bg-green-100 rounded-md focus:ring focus:ring-green-400"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-3 text-green-800"
+                  className="absolute text-green-800 right-3 top-3"
                 >
                   <img
                     src={showPassword ? eyeSlashIcon : eyeIcon}
@@ -164,7 +170,7 @@ const LoginPage = () => {
 
             <button
               type="submit"
-              className="w-full py-2 bg-gradient-to-r from-green-500 to-blue-500 hover:from-blue-500 hover:to-green-500 text-white rounded-md font-bold transform transition duration-300 hover:scale-105"
+              className="w-full py-2 font-bold text-white transition duration-300 transform rounded-md bg-gradient-to-r from-green-500 to-blue-500 hover:from-blue-500 hover:to-green-500 hover:scale-105"
             >
               Sign In
             </button>
@@ -173,17 +179,17 @@ const LoginPage = () => {
           {/* Google Login Button */}
           <button
             onClick={handleGoogleSignIn}
-            className="w-full mt-4 py-2 flex items-center justify-center bg-white text-gray-700 border border-gray-300 rounded-md font-bold transform transition duration-300 hover:scale-105"
+            className="flex items-center justify-center w-full py-2 mt-4 font-bold text-gray-700 transition duration-300 transform bg-white border border-gray-300 rounded-md hover:scale-105"
           >
             <img src={googleIcon} alt="Google" className="w-6 h-6 mr-2" />
             Sign in with Google
           </button>
 
-          <p className="text-center text-sm mt-4">
+          <p className="mt-4 text-sm text-center">
             Don’t have an account?{" "}
             <Link to="/signup" className="text-green-500 hover:underline">Sign Up</Link>
           </p>
-          <p className="text-center text-sm mt-2">
+          <p className="mt-2 text-sm text-center">
             <Link to="/forgot-password" className="text-green-500 hover:underline">Forgot Password?</Link>
           </p>
         </div>

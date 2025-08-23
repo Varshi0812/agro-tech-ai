@@ -75,9 +75,16 @@ const userSchema = new mongoose.Schema(
 );
 
 
+// Hash the password before saving
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next(); // Only hash if the password is modified
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
+
 // Generate a referral code on user creation
 userSchema.pre("save", function (next) {
-  if (this.isNew) {
+  if (this.isNew && !this.referralCode) {
     this.referralCode = generateReferralCode(this._id);
   }
   next();
@@ -87,7 +94,6 @@ userSchema.pre("save", function (next) {
 function generateReferralCode(userId) {
   return `REF${userId.toString().slice(-4).toUpperCase()}`;
 }
-
 
 userSchema.methods.addPoints = async function (rentalCost) {
   const pointsEarned = Math.floor(rentalCost / 10); // 10% of rental cost as points
@@ -113,20 +119,6 @@ userSchema.methods.redeemPoints = async function (points, rewardType) {
 
   await this.save();
   return reward;
-};
-
-
-// Hash the password before saving
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next(); // Only hash if the password is modified
-  this.password = await bcrypt.hash(this.password, 10);
-  next();
-});
-
-// Method to hash the password
-userSchema.methods.hashPassword = async function (password) {
-  const salt = await bcrypt.genSalt(10); // Generate salt with 10 rounds
-  return bcrypt.hash(password, salt); // Return the hashed password
 };
 
 // Method to compare passwords (used for login)

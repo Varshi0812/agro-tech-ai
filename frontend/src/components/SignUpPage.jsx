@@ -104,7 +104,7 @@ const SignUpPage = () => {
     }
   };
   
-  const ApiUrl = process.env.NODE_ENV === 'production'
+  const ApiUrl = import.meta.env.MODE === 'production'
   ? 'https://agro-tech-ai-backend-teal.vercel.app'
   : 'http://localhost:8080';
 

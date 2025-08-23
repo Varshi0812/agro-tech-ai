@@ -31,15 +31,22 @@ const AuthPage = () => {
     setIsMinLength(input.length >= 8);
   };
 
+  const ApiUrl = import.meta.env.MODE === 'production'
+    ? 'https://agro-tech-ai-backend-teal.vercel.app'
+    : 'http://localhost:8080';
+
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://agrotech-ai-11j3.onrender.com/auth/signup", {
+      // Generate username from firstName and lastName
+      const username = `${firstName.toLowerCase()}${lastName.toLowerCase()}${Math.floor(Math.random() * 1000)}`;
+      
+      const response = await axios.post(`${ApiUrl}/auth/signup`, {
         firstName,
         lastName,
+        username,
         email,
         password,
-        confirmPassword: password,
       });
       setMessage(response.data.message);
       setIsSignUp(false); 
@@ -51,7 +58,7 @@ const AuthPage = () => {
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://agrotech-ai-11j3.onrender.com/auth/signin", {
+      const response = await axios.post(`${ApiUrl}/auth/signin`, {
         email,
         password,
       });
@@ -67,9 +74,9 @@ const AuthPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-green-50 flex items-center justify-center">
-      <div className="bg-white shadow-lg rounded-lg w-full max-w-md flex flex-col items-center">
-        <div className="w-full flex justify-center py-4 bg-green-100 rounded-t-lg">
+    <div className="flex items-center justify-center min-h-screen bg-green-50">
+      <div className="flex flex-col items-center w-full max-w-md bg-white rounded-lg shadow-lg">
+        <div className="flex justify-center w-full py-4 bg-green-100 rounded-t-lg">
           <button
             onClick={() => setIsSignUp(false)}
             className={`w-1/2 py-2 font-bold ${
@@ -93,11 +100,11 @@ const AuthPage = () => {
         </div>
 
         {message && (
-          <div className="text-red-500 text-center p-2">{message}</div>
+          <div className="p-2 text-center text-red-500">{message}</div>
         )}
 
         {!isSignUp && (
-          <form className="p-6 space-y-4 w-full" onSubmit={handleSignIn}>
+          <form className="w-full p-6 space-y-4" onSubmit={handleSignIn}>
             <h2 className="text-2xl font-bold text-center text-green-600">
               Sign In
             </h2>
@@ -110,7 +117,7 @@ const AuthPage = () => {
                 placeholder="john@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 rounded-md bg-green-100 text-green-800 focus:ring focus:ring-green-400"
+                className="w-full px-4 py-2 text-green-800 bg-green-100 rounded-md focus:ring focus:ring-green-400"
               />
             </div>
             <div>
@@ -122,18 +129,18 @@ const AuthPage = () => {
                 placeholder="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 rounded-md bg-green-100 text-green-800 focus:ring focus:ring-green-400"
+                className="w-full px-4 py-2 text-green-800 bg-green-100 rounded-md focus:ring focus:ring-green-400"
               />
             </div>
             <div>
               <button
                 type="submit"
-                className="w-full py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-bold"
+                className="w-full py-2 font-bold text-white bg-green-500 rounded-md hover:bg-green-600"
               >
                 Sign In
               </button>
             </div>
-            <p className="text-center text-sm">
+            <p className="text-sm text-center">
               Don’t have an account?{" "}
               <a
                 href="#"
@@ -147,7 +154,7 @@ const AuthPage = () => {
         )}
 
         {isSignUp && (
-          <form className="p-6 space-y-4 w-full" onSubmit={handleSignUp}>
+          <form className="w-full p-6 space-y-4" onSubmit={handleSignUp}>
             <h2 className="text-2xl font-bold text-center text-green-600">
               Sign Up
             </h2>
@@ -160,7 +167,7 @@ const AuthPage = () => {
                 placeholder="John"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="w-full px-4 py-2 rounded-md bg-green-100 text-green-800 focus:ring focus:ring-green-400"
+                className="w-full px-4 py-2 text-green-800 bg-green-100 rounded-md focus:ring focus:ring-green-400"
               />
             </div>
             <div>
@@ -172,7 +179,7 @@ const AuthPage = () => {
                 placeholder="Doe"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="w-full px-4 py-2 rounded-md bg-green-100 text-green-800 focus:ring focus:ring-green-400"
+                className="w-full px-4 py-2 text-green-800 bg-green-100 rounded-md focus:ring focus:ring-green-400"
               />
             </div>
             <div>
@@ -184,7 +191,7 @@ const AuthPage = () => {
                 placeholder="john@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 rounded-md bg-green-100 text-green-800 focus:ring focus:ring-green-400"
+                className="w-full px-4 py-2 text-green-800 bg-green-100 rounded-md focus:ring focus:ring-green-400"
               />
             </div>
             <div>
@@ -196,7 +203,7 @@ const AuthPage = () => {
                 placeholder="password"
                 value={password}
                 onChange={(e) => validatePassword(e.target.value)}
-                className="w-full px-4 py-2 rounded-md bg-green-100 text-green-800 focus:ring focus:ring-green-400"
+                className="w-full px-4 py-2 text-green-800 bg-green-100 rounded-md focus:ring focus:ring-green-400"
               />
             </div>
 
@@ -245,12 +252,12 @@ const AuthPage = () => {
                 disabled={
                   !isLowerUpper || !isNumber || !isSpecialChar || !isMinLength
                 }
-                className="w-full py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-bold disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="w-full py-2 font-bold text-white bg-green-500 rounded-md hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 Sign Up
               </button>
             </div>
-            <p className="text-center text-sm">
+            <p className="text-sm text-center">
               Already have an account?{" "}
               <a
                 href="#"

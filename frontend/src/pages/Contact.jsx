@@ -267,10 +267,10 @@ const Contact = () => {
 
           <div>
             <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Location</h3>
-            <p>1-14 AgroTech AI Lane, Farming City, Madhapur,Hyderabad 533417</p>
+            <p>Belgaum</p>
             <div className="h-64 w-full mt-4">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13527.487707281556!2d78.3738297750517!3d17.449315703489304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9158f201b205%3A0x11bbe7be7792411b!2sMadhapur%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1728457656915!5m2!1sen!2sin"
+                src="https://www.google.com/maps/place/Jain+College+Of+Engineering/@15.7962799,74.4713082,17z/data=!3m1!4b1!4m6!3m5!1s0x3bbf65936f06b5a7:0x7a86c4a5f5b5dff9!8m2!3d15.7962748!4d74.4738831!16s%2Fg%2F1hd_9xsy_?entry=ttu&g_ep=EgoyMDI0MTIwOC4wIKXMDSoASAFQAw%3D%3D"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

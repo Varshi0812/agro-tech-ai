@@ -10,6 +10,7 @@ const contactRoutes = require('./routes/Contactroute');
 const shopRoutes = require('./routes/shop')
 const googleauth = require('./routes/googleauth')
 const agriProductRoutes = require('./routes/agriProductRoutes');
+require('dotenv').config();
 
 
 const discussionRoutes = require('./routes/discussionRoutes');

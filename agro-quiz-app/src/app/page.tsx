@@ -6,6 +6,9 @@ import { string_between_strings } from "@/lib/common";
 import { Crown, Frown, RotateCcw, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useRouter } from 'next/navigation';
+// Then use router object instead of request
+
 export default function Home() {
 	const [categoriesData, setCategoriesData] = useState(categories);
 	const [search, setSearch] = useState("");
@@ -46,10 +49,13 @@ export default function Home() {
 	}
 
   useEffect(() => {
-    setTimeout(() => {
-      startTimer()
-    }, 1000)
-  }, [time])
+    if (time > 0) {
+      const timer = setTimeout(() => {
+        setTime(time - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [time]);
 
 	const createQuiz = async (title: string, currentQuestion: number) => {
     setSelectedOption("");
@@ -152,7 +158,7 @@ export default function Home() {
 
 				{hasError ? (
 					<>
-						<div className="notFound mt-8">
+						<div className="mt-8 notFound">
 							<Frown className="h-[8rem] w-[8rem] text-[#058E3F]" />
 							<div className="message text-[2rem] font-semibold text-[#058E3F]">
 								Category Not Found
@@ -160,7 +166,7 @@ export default function Home() {
 						</div>
 					</>
 				) : (
-					<div className="quizCategories grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-8">
+					<div className="grid grid-cols-1 gap-5 px-8 quizCategories md:grid-cols-2 lg:grid-cols-3">
 						{categoriesData.map((cate, i) => {
 							return (
 								<>

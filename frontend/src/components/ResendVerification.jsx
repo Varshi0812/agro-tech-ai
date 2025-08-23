@@ -17,7 +17,7 @@ const ResendVerificationPage = () => {
     const email = queryParams.get("email");
   
     const ApiUrl =
-      process.env.NODE_ENV === "production"
+      import.meta.env.MODE === "production"
         ? "https://agro-tech-ai-backend-teal.vercel.app"
         : "http://localhost:8080";
   

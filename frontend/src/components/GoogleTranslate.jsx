@@ -11,7 +11,7 @@ const GoogleTranslate = () => {
       } else {
         new window.google.translate.TranslateElement({
           pageLanguage: 'en',
-          includedLanguages: 'en,hi,pa,sa,mr,ur,bn,es,ja,ko,zh-CN,es,nl,fr,de,it,ta,te',
+          includedLanguages: 'en,hi,fr,de,it,ta,te,kn,mr',
           layout: window.google.translate.TranslateElement.InlineLayout.HORIZONTAL,
           defaultLanguage: 'en',
         }, 'google_element');

@@ -43,18 +43,18 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 mt-10">
+    <div className="flex items-center justify-center min-h-screen mt-10 bg-gradient-to-r from-green-400 to-blue-500">
       <ToastContainer position="top-center" autoClose={5000} hideProgressBar newestOnTop />
-      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="grid w-full max-w-5xl grid-cols-1 overflow-hidden bg-white rounded-lg shadow-lg md:grid-cols-2">
         <div className="hidden md:block">
-          <img src={loginImage} alt="Forgot Password Illustration" className="h-full w-full object-cover" />
+          <img src={loginImage} alt="Forgot Password Illustration" className="object-cover w-full h-full" />
         </div>
 
-        <div className="p-10 flex flex-col justify-center">
-          <h2 className="text-4xl font-bold text-center text-green-600 mb-4">
+        <div className="flex flex-col justify-center p-10">
+          <h2 className="mb-4 text-4xl font-bold text-center text-green-600">
             Forgot Password
           </h2>
-          <p className="text-center text-gray-600 mb-8">
+          <p className="mb-8 text-center text-gray-600">
             {step === 1 && "Enter your email to receive an OTP"}
             {step === 2 && "Enter the OTP sent to your email"}
             {step === 3 && "Reset your password"}
@@ -68,10 +68,10 @@ const ForgotPasswordPage = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 mt-1 rounded-md bg-green-100 text-green-800 focus:ring focus:ring-green-400"
+                className="w-full px-4 py-2 mt-1 text-green-800 bg-green-100 rounded-md focus:ring focus:ring-green-400"
                 required
               />
-              <button onClick={handleSendOtp} className="w-full mt-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-md font-bold">
+              <button onClick={handleSendOtp} className="w-full py-2 mt-4 font-bold text-white rounded-md bg-gradient-to-r from-green-500 to-blue-500">
                 Send OTP
               </button>
             </div>
@@ -85,10 +85,10 @@ const ForgotPasswordPage = () => {
                 id="otp"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
-                className="w-full px-4 py-2 mt-1 rounded-md bg-green-100 text-green-800 focus:ring focus:ring-green-400"
+                className="w-full px-4 py-2 mt-1 text-green-800 bg-green-100 rounded-md focus:ring focus:ring-green-400"
                 required
               />
-              <button onClick={handleVerifyOtp} className="w-full mt-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-md font-bold">
+              <button onClick={handleVerifyOtp} className="w-full py-2 mt-4 font-bold text-white rounded-md bg-gradient-to-r from-green-500 to-blue-500">
                 Verify OTP
               </button>
             </div>
@@ -102,16 +102,16 @@ const ForgotPasswordPage = () => {
                 id="newPassword"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full px-4 py-2 mt-1 rounded-md bg-green-100 text-green-800 focus:ring focus:ring-green-400"
+                className="w-full px-4 py-2 mt-1 text-green-800 bg-green-100 rounded-md focus:ring focus:ring-green-400"
                 required
               />
-              <button onClick={handleResetPassword} className="w-full mt-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-md font-bold">
+              <button onClick={handleResetPassword} className="w-full py-2 mt-4 font-bold text-white rounded-md bg-gradient-to-r from-green-500 to-blue-500">
                 Reset Password
               </button>
             </div>
           )}
 
-          <p className="text-center text-sm mt-4">
+          <p className="mt-4 text-sm text-center">
             <a href="/login" className="text-green-500 hover:underline">Back to Login</a>
           </p>
         </div>

@@ -16,7 +16,6 @@ const Footer = () => {
     const companyLinks = [
         { name: 'About Us', path: '/aboutus' },
         { name: 'Contact Us', path: '/contact' },
-        { name: 'Contributors', path: '/contributor' },
     ];
 
     // Define quick links
@@ -32,16 +31,16 @@ const Footer = () => {
 
     // Define social media links
     const socialMedia = [
-        { Icon: FaGithub, link: 'https://github.com/manikumarreddyu/AgroTech-AI', color: '#333' },
+        { Icon: FaGithub, link: 'https://github.com/tanvipawashe1505', color: '#333' },
         { Icon: FaDiscord, link: 'https://discord.gg/yRPQDDP6', color: '#7289DA' },
-        { Icon: FaXTwitter, link: 'https://twitter.com/YourTwitterHandle', color: '#1DA1F2' }, // Updated to FaTwitter
-        { Icon: FaLinkedinIn, link: 'https://www.linkedin.com/in/manikumarreddyu', color: '#0077B5' },
+        { Icon: FaXTwitter, link: 'https://x.com/tanvi_pawashe', color: '#1DA1F2' }, // Updated to FaTwitter
+        { Icon: FaLinkedinIn, link: 'https://www.linkedin.com/in/tanvi-vinayak-pawashe-00460b2b1', color: '#0077B5' },
     ];
 
     // Define legal links with their paths if available
     const legalLinks = [
         { name: 'Privacy Policy', path: '/privacy-policy' },
-
+ 
         { name: 'Code Of Conduct', path: '/code-of-conduct' },
 
         { name: 'License', path: '/licensing' },
